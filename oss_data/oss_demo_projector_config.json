@@ -28,7 +28,8 @@
                     100,
                     100
                 ]
-            }
+            },
+            "metadataPath": "./oss_data/metadata.tsv"
         }
     ],
     "modelCheckpointPath": "Demo datasets"

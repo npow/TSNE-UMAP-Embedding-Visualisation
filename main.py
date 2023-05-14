@@ -64,8 +64,9 @@ def populate_img_arr(images_paths, size=(100, 100), should_preprocess=False):
 @click.option('--sprite_size', default=100, help='Size of sprite')
 @click.option('--tensor_name', default="tensor.bytes", help='Name of Tensor file')
 @click.option('--sprite_name', default="sprites.png", help='Name of sprites file')
+@click.option('--metadata_name', default="metadata.tsv", help='Name of metadata file')
 @click.option('--model_input_size', default=299, help='Size of inputs to model')
-def main(data, name, sprite_size, tensor_name, sprite_name, model_input_size):
+def main(data, name, sprite_size, tensor_name, sprite_name, metadata_name, model_input_size):
     
     if not data.endswith('/'):
         raise ValueError('Makesure --name ends with a "/"')
@@ -84,6 +85,11 @@ def main(data, name, sprite_size, tensor_name, sprite_name, model_input_size):
     sprite = Image.fromarray(images_to_sprite(raw_imgs).astype(np.uint8))
     sprite.save('./oss_data/' + sprite_name)
 
+    with open('oss_data/metadata.tsv', 'w') as f:
+        for image_path in images_paths:
+            fname = image_path.split("/")[-1].split(".")[0]
+            f.write(fname + "\n")
+
     oss_json = json.load(open('./oss_data/oss_demo_projector_config.json'))
     tensor_shape = [raw_imgs.shape[0], model.output_shape[1]]
     single_image_dim = [raw_imgs.shape[1], raw_imgs.shape[2]]
@@ -91,6 +97,7 @@ def main(data, name, sprite_size, tensor_name, sprite_name, model_input_size):
     json_to_append = {"tensorName": name,
                       "tensorShape": tensor_shape,
                       "tensorPath": "./oss_data/" + tensor_name,
+                      "metadataPath": "./oss_data/" + metadata_name,
                       "sprite": {"imagePath": "./oss_data/" + sprite_name,
                                  "singleImageDim": single_image_dim}}
     oss_json['embeddings'].append(json_to_append)

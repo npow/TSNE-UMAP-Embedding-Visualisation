@@ -1,35 +1,20 @@
 {
     "embeddings": [
         {
-            "tensorName": "RIT",
-            "tensorShape": [
-                3979,
-                2048
-            ],
-            "tensorPath": "oss_data/tensor.bytes",
-            "sprite": {
-                "imagePath": "oss_data/sprites.png",
-                "singleImageDim": [
-                    100,
-                    100
-                ]
-            }
-        },
-        {
             "tensorName": "Visualisation",
             "tensorShape": [
                 2251,
                 2048
             ],
             "tensorPath": "./oss_data/tensor.bytes",
+            "metadataPath": "./oss_data/metadata.tsv",
             "sprite": {
                 "imagePath": "./oss_data/sprites.png",
                 "singleImageDim": [
                     100,
                     100
                 ]
-            },
-            "metadataPath": "./oss_data/metadata.tsv"
+            }
         }
     ],
     "modelCheckpointPath": "Demo datasets"
